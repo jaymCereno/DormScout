@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <title>DormScout - Find Your Dorm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
 
     <!-- Top Navigation Bar -->
     <header class="navbar">
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <div class="logo">
-            <img src="logo.png" alt="DormScout Logo">
+            <img src="images/DormScout Logo.png" alt="DormScout Logo">
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Listing</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#"><img src="profile-icon.png" alt="Profile" class="icon"></a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/listing.html">Listing</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li><a href="pages/profile.html"><img src="images/profile-icon.svg" alt="Profile" class="icon"></a></li>
             </ul>
         </nav>
     </header>
@@ -27,16 +33,60 @@
     <section class="hero">
         <h1>Your Dorm Life Starts Here</h1>
         <div class="search-bar">
-            <select>
-                <option>Location</option>
+            <div class="custom-select" data-filter="location">
+                <div class="select-selected">Select Location</div>
+                <div class="select-items select-hide">
+                    <div data-value="">Select Location</div>
+                    <div data-value="recto">Recto Avenue</div>
+                    <div data-value="morayta">Morayta Street</div>
+                    <div data-value="university-belt">University Belt</div>
+                    <div data-value="sampaloc">Sampaloc</div>
+                    <div data-value="quiapo">Quiapo</div>
+                </div>
+            </div>
+            <div class="custom-select" data-filter="distance">
+                <div class="select-selected">Distance</div>
+                <div class="select-items select-hide">
+                    <div data-value="">Distance</div>
+                    <div data-value="1-5">1-5 minutes walk</div>
+                    <div data-value="5-10">5-10 minutes walk</div>
+                    <div data-value="10-15">10-15 minutes walk</div>
+                    <div data-value="15+">15+ minutes walk</div>
+                </div>
+            </div>
+            <div class="custom-select" data-filter="price">
+                <div class="select-selected">Price Range</div>
+                <div class="select-items select-hide">
+                    <div data-value="">Price Range</div>
+                    <div data-value="0-10000">Under ₱10,000</div>
+                    <div data-value="10000-15000">₱10,000 - ₱15,000</div>
+                    <div data-value="15000-20000">₱15,000 - ₱20,000</div>
+                    <div data-value="20000+">Above ₱20,000</div>
+                </div>
+            </div>
+            <select id="locationFilter" style="display: none;">
+                <option value="">Select Location</option>
+                <option value="recto">Recto Avenue</option>
+                <option value="morayta">Morayta Street</option>
+                <option value="university-belt">University Belt</option>
+                <option value="sampaloc">Sampaloc</option>
+                <option value="quiapo">Quiapo</option>
             </select>
-            <select>
-                <option>Distance</option>
+            <select id="distanceFilter" style="display: none;">
+                <option value="">Distance from University</option>
+                <option value="1-5">1-5 minutes walk</option>
+                <option value="5-10">5-10 minutes walk</option>
+                <option value="10-15">10-15 minutes walk</option>
+                <option value="15+">15+ minutes walk</option>
             </select>
-            <select>
-                <option>Price</option>
+            <select id="priceFilter" style="display: none;">
+                <option value="">Price Range</option>
+                <option value="0-10000">Under ₱10,000</option>
+                <option value="10000-15000">₱10,000 - ₱15,000</option>
+                <option value="15000-20000">₱15,000 - ₱20,000</option>
+                <option value="20000+">Above ₱20,000</option>
             </select>
-            <button>Search</button>
+            <button onclick="searchDorms()">Search</button>
         </div>
     </section>
 
@@ -44,18 +94,18 @@
     <section class="dorm-list">
         <h2>Explore Popular Dorms in Manila</h2>
         <div class="dorms">
-            <div class="dorm">
-                <img src="vista-recto.jpg" alt="Vista Recto">
+            <div class="dorm" onclick="window.location.href='pages/vista-recto-details.html'">
+                <img src="images/home page vista recto.png" alt="Vista Recto">
                 <h3>Vista Recto</h3>
                 <p>2 - 3 Person Dorm Rooms<br>Water and Electricity Included<br>Gym, Study Area, Swimming Pool</p>
             </div>
-            <div class="dorm">
-                <img src="university-tower.jpg" alt="University Tower">
+            <div class="dorm" onclick="window.location.href='pages/university-tower-details.html'">
+                <img src="images/home page university tower.png" alt="University Tower">
                 <h3>University Tower</h3>
                 <p>1 - 2 Person Dorm Rooms<br>Fully Furnished Dorm Rooms<br>Free WiFi</p>
             </div>
-            <div class="dorm">
-                <img src="one-morayta.jpg" alt="One Morayta">
+            <div class="dorm" onclick="window.location.href='pages/one-morayta-details.html'">
+                <img src="images/home page one morayta.png" alt="One Morayta">
                 <h3>One Morayta</h3>
                 <p>3 - 4 Person Dorm Rooms<br>Semi Furnished with Water and Electricity<br>Sky Lounge and Rooftop</p>
             </div>
