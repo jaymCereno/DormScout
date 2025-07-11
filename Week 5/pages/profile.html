@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selected Dorms - DormScout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/main.js" defer></script>
+</head>
+<body class="profile-page">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo">
+            <img src="../images/DormScout Logo.png" alt="DormScout Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="listing.html">Listing</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html" class="active"><img src="../images/profile-icon.svg" alt="Profile" class="icon"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Profile Content -->
+    <main class="profile-container">
+        <!-- Selected Dorms Dashboard -->
+        <div id="selectedDormsDashboard" class="profile-dashboard">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h1>Your Selected Dorms</h1>
+                    <p>Browse and manage your selected dormitories</p>
+                </div>
+            </div>
+            
+            <div class="tab-content active" id="selectedTab">
+                <div class="selected-dorms" id="selectedDormsList">
+                    <!-- Selected dorms will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load selected dorms when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSelectedDorms();
+        });
+
+        function loadSelectedDorms() {
+            const container = document.getElementById('selectedDormsList');
+            const selectedDorms = JSON.parse(localStorage.getItem('selectedDorms') || '[]');
+            
+            if (selectedDorms.length === 0) {
+                container.innerHTML = `
+                    <div class="no-selected">
+                        <div class="no-selected-icon"></div>
+                        <h3 class="no-selected-title">No Dorms Selected Yet</h3>
+                        <p class="no-selected-desc">
+                            Browse our dorm listings and select your favorites to see them here!
+                        </p>
+                        <a href="listing.html" class="no-selected-btn">
+                            Browse Dorms
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = selectedDorms.map(dorm => `
+                <div class="selected-dorm-item">
+                    <div class="selected-dorm-item-row">
+                        <div class="selected-dorm-img-col">
+                            <img src="${dorm.image || '../images/DormScout Logo.png'}" alt="${dorm.name}" class="selected-dorm-img">
+                        </div>
+                        <div class="selected-dorm-info-col">
+                            <h4 class="selected-dorm-title">${dorm.name}</h4>
+                            <div class="selected-dorm-details">
+                                <div>
+                                    <p class="selected-dorm-price">
+                                        ${dorm.price || 'Contact for pricing'}
+                                    </p>
+                                    <p class="selected-dorm-capacity">
+                                        ${dorm.capacity || 'Multiple occupancy'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="selected-dorm-address">
+                                        ${dorm.address || dorm.location}
+                                    </p>
+                                    <p class="selected-dorm-distance">
+                                        ${dorm.distance || 'Near university'}
+                                    </p>
+                                </div>
+                            </div>
+                            ${dorm.description ? `
+                                <p class="selected-dorm-description">
+                                    ${dorm.description}
+                                </p>
+                            ` : ''}
+                            ${dorm.amenities && dorm.amenities.length > 0 ? `
+                                <div class="selected-dorm-amenities-section">
+                                    <p class="selected-dorm-amenities-title">Amenities:</p>
+                                    <div class="selected-dorm-amenities-list">
+                                        ${dorm.amenities.slice(0, 6).map(amenity => `
+                                            <span class="selected-dorm-amenity">${amenity}</span>
+                                        `).join('')}
+                                        ${dorm.amenities.length > 6 ? `
+                                            <span class="selected-dorm-amenity-more">+${dorm.amenities.length - 6} more</span>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            <p class="selected-dorm-date">
+                                Selected on ${new Date(dorm.selectedDate).toLocaleDateString()}
+                            </p>
+                        </div>
+                        <div class="selected-dorm-actions">
+                            <button onclick="removeDorm('${dorm.id}')" class="selected-dorm-remove-btn">
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeDorm(dormId) {
+            const selectedDorms = JSON.parse(localStorage.getItem('selectedDorms') || '[]');
+            const updatedDorms = selectedDorms.filter(dorm => dorm.id !== dormId);
+            localStorage.setItem('selectedDorms', JSON.stringify(updatedDorms));
+            
+            // Reload the list
+            loadSelectedDorms();
+        }
+
+        // Notification function removed
+    </script>
+
+</body>
+</html>
