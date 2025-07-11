@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DormScout - Listing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/main.js" defer></script>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo">
+            <img src="../images/DormScout Logo.png" alt="DormScout Logo" onerror="this.src='../images/default-avatar.png'">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="listing.html" class="active">Listing</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html"><img src="../images/profile-icon.svg" alt="Profile" class="icon"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div class="container">
+
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <h3>Filters</h3>
+            
+            <div class="filter-group">
+                <label for="locationFilter">Location:</label>
+                <div class="custom-select" data-filter="location">
+                    <div class="select-selected">All Locations</div>
+                    <div class="select-items select-hide">
+                        <div data-value="">All Locations</div>
+                        <div data-value="recto">Recto Avenue</div>
+                        <div data-value="morayta">Morayta Street</div>
+                        <div data-value="university-belt">University Belt</div>
+                        <div data-value="sampaloc">Sampaloc</div>
+                        <div data-value="quiapo">Quiapo</div>
+                    </div>
+                </div>
+                <select id="locationFilter" style="display: none;">
+                    <option value="">All Locations</option>
+                    <option value="recto">Recto Avenue</option>
+                    <option value="morayta">Morayta Street</option>
+                    <option value="university-belt">University Belt</option>
+                    <option value="sampaloc">Sampaloc</option>
+                    <option value="quiapo">Quiapo</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="distanceFilter">Distance:</label>
+                <div class="custom-select" data-filter="distance">
+                    <div class="select-selected">Any Distance</div>
+                    <div class="select-items select-hide">
+                        <div data-value="">Any Distance</div>
+                        <div data-value="1-5">1-5 minutes walk</div>
+                        <div data-value="5-10">5-10 minutes walk</div>
+                        <div data-value="10-15">10-15 minutes walk</div>
+                        <div data-value="15+">15+ minutes walk</div>
+                    </div>
+                </div>
+                <select id="distanceFilter" style="display: none;">
+                    <option value="">Any Distance</option>
+                    <option value="1-5">1-5 minutes walk</option>
+                    <option value="5-10">5-10 minutes walk</option>
+                    <option value="10-15">10-15 minutes walk</option>
+                    <option value="15+">15+ minutes walk</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="priceFilter">Price Range:</label>
+                <div class="custom-select" data-filter="price">
+                    <div class="select-selected">Price Range</div>
+                    <div class="select-items select-hide">
+                        <div data-value="">Price Range</div>
+                        <div data-value="0-10000">Under ₱10,000</div>
+                        <div data-value="10000-15000">₱10,000 - ₱15,000</div>
+                        <div data-value="15000-20000">₱15,000 - ₱20,000</div>
+                        <div data-value="20000+">Above ₱20,000</div>
+                    </div>
+                </div>
+                <select id="priceFilter" style="display: none;">
+                    <option value="">Price Range</option>
+                    <option value="0-10000">Under ₱10,000</option>
+                    <option value="10000-15000">₱10,000 - ₱15,000</option>
+                    <option value="15000-20000">₱15,000 - ₱20,000</option>
+                    <option value="20000+">Above ₱20,000</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="amenityFilter">Amenities:</label>
+                <div class="custom-select" data-filter="amenity">
+                    <div class="select-selected">Any Amenities</div>
+                    <div class="select-items select-hide">
+                        <div data-value="">Any Amenities</div>
+                        <div data-value="gym">Gym</div>
+                        <div data-value="pool">Swimming Pool</div>
+                        <div data-value="wifi">Free WiFi</div>
+                        <div data-value="furnished">Furnished</div>
+                        <div data-value="parking">Parking</div>
+                    </div>
+                </div>
+                <select id="amenityFilter" style="display: none;">
+                    <option value="">Any Amenities</option>
+                    <option value="gym">Gym</option>
+                    <option value="pool">Swimming Pool</option>
+                    <option value="wifi">Free WiFi</option>
+                    <option value="furnished">Furnished</option>
+                    <option value="parking">Parking</option>
+                </select>
+            </div>
+
+            <button onclick="clearFilters()" class="clear-btn">Clear All Filters</button>
+            
+            <div class="results-count">
+                <p id="resultsCount">Showing all dorms</p>
+            </div>
+        </aside>
+
+        <!-- Main Listing Content -->
+        <main class="listing">
+            <h2>List of Dorms</h2>
+            
+            <div class="dorms-grid">
+                <div class="dorm" onclick="window.location.href='vista-recto-details.html'" 
+                     data-location="recto" data-distance="5-10" data-price="12000" data-amenities="gym,pool,wifi">
+                    <img src="../images/home page vista recto.png" alt="Vista Recto" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>Vista Recto</h3>
+                        <div class="price">₱12,000-₱18,000/month</div>
+                        <div class="address">1896 C. M. Recto Avenue, Quiapo, Manila</div>
+                        <span class="amenities-tags">Gym • Pool • WiFi</span>
+                    </div>
+                </div>
+
+                <div class="dorm" onclick="window.location.href='university-tower-details.html'"
+                     data-location="university-belt" data-distance="1-5" data-price="15000" data-amenities="wifi,furnished">
+                    <img src="../images/home page university tower.png" alt="University Tower" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>University Tower</h3>
+                        <div class="price">₱15,000-₱22,000/month</div>
+                        <div class="address">31 Moret St. Sampaloc, Manila</div>
+                        <span class="amenities-tags">WiFi • Furnished</span>
+                    </div>
+                </div>
+
+                <div class="dorm" onclick="window.location.href='one-morayta-details.html'"
+                     data-location="morayta" data-distance="5-10" data-price="10000" data-amenities="wifi,parking">
+                    <img src="../images/home page one morayta.png" alt="One Morayta" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>One Morayta</h3>
+                        <div class="price">₱10,000-₱16,000/month</div>
+                        <div class="address">860 Nicanor Reyes St, Sampaloc, 1008 Metro Manila</div>
+                        <span class="amenities-tags">WiFi • Parking</span>
+                    </div>
+                </div>
+
+                <div class="dorm" onclick="window.location.href='premium-sampaloc-details.html'"
+                     data-location="sampaloc" data-distance="1-5" data-price="15000" data-amenities="gym,wifi,furnished,parking">
+                    <img src="../images/list university tower.png" alt="Premium Sampaloc Residence" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>Premium Sampaloc Residence</h3>
+                        <div class="price">₱15,000/month</div>
+                        <div class="address">123 Sampaloc Street, Manila</div>
+                        <span class="amenities-tags">Gym • WiFi • Furnished • Parking</span>
+                    </div>
+                </div>
+
+                <div class="dorm" onclick="window.location.href='budget-quiapo-details.html'"
+                     data-location="quiapo" data-distance="10-15" data-price="5000" data-amenities="wifi">
+                    <img src="../images/list vista recto.png" alt="Budget Quiapo Dormitory" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>Budget Quiapo Dormitory</h3>
+                        <div class="price">₱5,000/month</div>
+                        <div class="address">456 Quiapo Boulevard, Manila</div>
+                        <span class="amenities-tags">WiFi</span>
+                    </div>
+                </div>
+
+                <div class="dorm" onclick="window.location.href='luxury-university-details.html'"
+                     data-location="university-belt" data-distance="1-5" data-price="22000" data-amenities="gym,pool,wifi,furnished,parking">
+                    <img src="../images/list one morayta.png" alt="Luxury University Dorm" onerror="this.src='../images/default-avatar.png'">
+                    <div class="info">
+                        <h3>Luxury University Heights</h3>
+                        <div class="price">₱22,000/month</div>
+                        <div class="address">789 University Avenue, Manila</div>
+                        <span class="amenities-tags">Gym • Pool • WiFi • Furnished • Parking</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
