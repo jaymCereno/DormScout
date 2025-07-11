@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Selected Dorms - DormScout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/main.js" defer></script>
+</head>
+<body class="profile-page">
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo">
+            <img src="../images/DormScout Logo.png" alt="DormScout Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="listing.html">Listing</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="profile.html" class="active"><img src="../images/profile-icon.svg" alt="Profile" class="icon"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Profile Content -->
+    <main class="profile-container">
+        <!-- Selected Dorms Dashboard -->
+        <div id="selectedDormsDashboard" class="profile-dashboard">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h1>Your Selected Dorms</h1>
+                    <p>Browse and manage your selected dormitories</p>
+                </div>
+            </div>
+            
+            <div class="tab-content active" id="selectedTab">
+                <div class="selected-dorms" id="selectedDormsList">
+                    <!-- Selected dorms will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load selected dorms when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSelectedDorms();
+        });
+
+        function loadSelectedDorms() {
+            const container = document.getElementById('selectedDormsList');
+            const selectedDorms = JSON.parse(localStorage.getItem('selectedDorms') || '[]');
+            
+            if (selectedDorms.length === 0) {
+                container.innerHTML = `
+                    <div class="no-selected" style="
+                        text-align: center;
+                        padding: 60px 20px;
+                        color: #6c757d;
+                        background: white;
+                        border-radius: 16px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                        border: 1px solid #e9ecef;
+                    ">
+                        <div style="font-size: 48px; color: #dee2e6; margin-bottom: 20px;">🏠</div>
+                        <h3 style="color: #495057; margin-bottom: 10px; font-weight: 600;">No Dorms Selected Yet</h3>
+                        <p style="margin-bottom: 30px; color: #6c757d; font-size: 16px; line-height: 1.5;">
+                            Browse our dorm listings and select your favorites to see them here!
+                        </p>
+                        <a href="listing.html" style="
+                            background: linear-gradient(135deg, #174ca1, #1a5bb8);
+                            color: white;
+                            padding: 12px 24px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            font-weight: 600;
+                            display: inline-block;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            Browse Dorms
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = selectedDorms.map(dorm => `
+                <div class="selected-dorm-item" style="
+                    background: white;
+                    border-radius: 16px;
+                    padding: 25px;
+                    margin-bottom: 25px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    border: 1px solid #e9ecef;
+                    transition: all 0.3s ease;
+                " 
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'"
+                >
+                    <div style="display: flex; gap: 25px; flex-wrap: wrap;">
+                        <div style="flex: 0 0 150px;">
+                            <img src="${dorm.image || '../images/DormScout Logo.png'}" alt="${dorm.name}" style="
+                                width: 150px;
+                                height: 120px;
+                                object-fit: cover;
+                                border-radius: 12px;
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                            ">
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 style="color: #174ca1; margin: 0 0 12px; font-size: 1.4em; font-weight: 700;">${dorm.name}</h4>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div>
+                                    <p style="color: #28a745; font-weight: 700; margin: 5px 0; font-size: 1.1em;">
+                                        💰 ${dorm.price || 'Contact for pricing'}
+                                    </p>
+                                    <p style="color: #666; margin: 5px 0; font-size: 0.9em;">
+                                        👥 ${dorm.capacity || 'Multiple occupancy'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p style="color: #666; margin: 5px 0; font-size: 0.9em;">
+                                        📍 ${dorm.address || dorm.location}
+                                    </p>
+                                    <p style="color: #666; margin: 5px 0; font-size: 0.9em;">
+                                        🚶 ${dorm.distance || 'Near university'}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            ${dorm.description ? `
+                                <p style="color: #555; margin: 10px 0; font-size: 0.9em; line-height: 1.5;">
+                                    📝 ${dorm.description}
+                                </p>
+                            ` : ''}
+                            
+                            ${dorm.amenities && dorm.amenities.length > 0 ? `
+                                <div style="margin: 15px 0;">
+                                    <p style="color: #174ca1; font-weight: 600; margin: 0 0 8px; font-size: 0.9em;">🏢 Amenities:</p>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                        ${dorm.amenities.slice(0, 6).map(amenity => `
+                                            <span style="
+                                                background: #f0f8ff;
+                                                color: #174ca1;
+                                                padding: 4px 10px;
+                                                border-radius: 15px;
+                                                font-size: 0.8em;
+                                                font-weight: 500;
+                                                border: 1px solid #e1f0ff;
+                                            ">${amenity}</span>
+                                        `).join('')}
+                                        ${dorm.amenities.length > 6 ? `
+                                            <span style="
+                                                background: #f8f9fa;
+                                                color: #6c757d;
+                                                padding: 4px 10px;
+                                                border-radius: 15px;
+                                                font-size: 0.8em;
+                                                font-weight: 500;
+                                            ">+${dorm.amenities.length - 6} more</span>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <p style="color: #6c757d; font-style: italic; margin: 15px 0 0; font-size: 0.85em;">
+                                ⏰ Selected on ${new Date(dorm.selectedDate).toLocaleDateString()}
+                            </p>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <button onclick="removeDorm('${dorm.id}')" style="
+                                background: #dc3545;
+                                color: white;
+                                border: none;
+                                padding: 10px 16px;
+                                border-radius: 8px;
+                                font-size: 12px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                            " 
+                            onmouseover="this.style.background='#c82333'; this.style.transform='scale(1.05)'"
+                            onmouseout="this.style.background='#dc3545'; this.style.transform='scale(1)'"
+                            >
+                                🗑️ Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function removeDorm(dormId) {
+            const selectedDorms = JSON.parse(localStorage.getItem('selectedDorms') || '[]');
+            const updatedDorms = selectedDorms.filter(dorm => dorm.id !== dormId);
+            localStorage.setItem('selectedDorms', JSON.stringify(updatedDorms));
+            
+            // Show notification
+            showNotification('Dorm removed from your selection!', 'success');
+            
+            // Reload the list
+            loadSelectedDorms();
+        }
+
+        function showNotification(message, type = 'info') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
